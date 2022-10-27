@@ -29,13 +29,6 @@ jobs:
         env: 
           SHA: ${{ env.SHA }}
 
-      - name: Install kubectl
-        if: github.ref == 'refs/heads/main'
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'v1.21.3'
-        id: install
-
       - name: Configure AWS Credentials
         if: github.ref == 'refs/heads/main'
         uses: aws-actions/configure-aws-credentials@v1
