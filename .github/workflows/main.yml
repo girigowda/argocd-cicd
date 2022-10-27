@@ -11,42 +11,52 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        if: github.ref == 'refs/heads/dev'
+        uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+      - uses: benjlevesque/short-sha@v1.2
+        if: github.ref == 'refs/heads/dev'
+        id: short-sha
+        with:
+          length: 6
+      - run: echo $SHA
+        env: 
+          SHA: ${{ steps.short-sha.outputs.sha }}
+      - run: echo $SHA
+        env: 
+          SHA: ${{ env.SHA }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      - name: Install kubectl
+        if: github.ref == 'refs/heads/dev'
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'v1.21.3'
+        id: install
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: gitops-argocd
+      - name: Configure AWS Credentials
+        if: github.ref == 'refs/heads/dev'
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-3
 
-      run: |
-        # Build a docker container and push it to ECR
-        git_hash=$(git rev-parse --short "$GITHUB_SHA")
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$git_hash .
-        echo "Pushing image to ECR..."
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$git_hash
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_REF##*/}-$git_hash"
-        
-    - name: Update Version
-      run: |
-          git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          version=$(cat ./charts/helm-example/values.yaml | grep version: | awk '{print $2}')
-          sed -i "s/$version/${GITHUB_REF##*/}-$git_hash/" ./charts/helm-example/values.yaml
-          
-    - name: Commit and push changes
-      uses: devops-infra/action-commit-push@v0.3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit_message: Version updated
+      - name: ecr login
+        if: github.ref == 'refs/heads/dev'
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, Tag, and Push the Image to Amazon ECR
+        if: github.ref == 'refs/heads/dev'
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: env-dev-skorelife-credit-service
+          IMAGE_TAG: ${{ env.SHA }}
+          DEV_URI_ID: ${{ secrets.DEV_URI_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          aws ecr get-login-password --region ap-southeast-3 | docker login --username AWS --password-stdin $DEV_URI_ID.dkr.ecr.ap-southeast-3.amazonaws.com
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg TOKEN=$TOKEN .
+          docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
