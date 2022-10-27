@@ -49,9 +49,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: mtn
           IMAGE_TAG: ${{ env.SHA }}
-          DEV_URI_ID: ${{ secrets.DEV_URI_ID }}
           TOKEN: ${{ secrets.TOKEN }}
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $DEV_URI_ID.dkr.ecr.us-east-1.amazonaws.com
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 813383539013.dkr.ecr.us-east-1.amazonaws.com
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg TOKEN=$TOKEN .
           docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
