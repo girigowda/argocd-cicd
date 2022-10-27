@@ -37,11 +37,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: ecr login
-        if: github.ref == 'refs/heads/main'
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
       - name: Build, Tag, and Push the Image to Amazon ECR
         if: github.ref == 'refs/heads/main'
         id: build-image
@@ -53,5 +48,8 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $DEV_URI_ID.dkr.ecr.us-east-1.amazonaws.com
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg TOKEN=$TOKEN .
-          docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
+          docker build -t mtn .
+          docker tag mtn:latest 813383539013.dkr.ecr.us-east-1.amazonaws.com/mtn:latest
+          docker tag mtn:$IMAGE_TAG 813383539013.dkr.ecr.us-east-1.amazonaws.com/mtn:$IMAGE_TAG
+          docker push 813383539013.dkr.ecr.us-east-1.amazonaws.com/mtn:latest
+          docker push 813383539013.dkr.ecr.us-east-1.amazonaws.com/mtn:$IMAGE_TAG
