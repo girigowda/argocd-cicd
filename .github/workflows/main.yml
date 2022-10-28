@@ -66,7 +66,7 @@ jobs:
             cat /home/ubuntu/actions-runner/_work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             
       - name: Commit and push changes
-        uses: devops-infra/action-commit-push@main
+        uses: devops-infra/action-commit-push@master
         with:
           github_token: ${{ secrets.TOKEN }}
           commit_message: Version updated
