@@ -62,5 +62,4 @@ jobs:
             ls -ltr
             pwd
             echo $IMAGE_TAG
-            /home/ubuntu/actions-runner/_work/argocd-cicd/argocd-cicd
             sed -i "s/version: main-8471792/version: $IMAGE_TAG/g" /home/ubuntu/actions-runner/_work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
