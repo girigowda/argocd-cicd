@@ -6,11 +6,9 @@ on:
   push:
     branches: [ main ]
 jobs:
- deploy-dev:
-    runs-on:
-      - self-hosted
-      - main
-      - mtn
+  build:
+    name: Build and Pushing the Image
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
