@@ -64,7 +64,7 @@ jobs:
             echo $ver
             cunt=$(echo "$ver" | cut -c -11)
             echo $cunt
-            sed -i "s|version: |$cunt|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
+            sed -i "s|version:|$cunt|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             #sed -i "s|version: |version: $IMAGE_TAG|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             cat /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             
