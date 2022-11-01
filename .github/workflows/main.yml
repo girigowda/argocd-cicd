@@ -60,8 +60,7 @@ jobs:
             ls -ltr
             pwd
             echo $IMAGE_TAG 
-            #sed -i "s|version: |$IMAGE_TAG|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
-            sed -i "s/version: /version: $IMAGE_TAG/g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
+            sed -i "s|version: |version: $IMAGE_TAG|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             cat /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             
       - name: Commit and push changes
