@@ -64,11 +64,11 @@ jobs:
             cunt=$(echo "$ver" | cut -c -9)
             echo $cunt
             sed -i "s|version: |$cunt|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
-            sed -i "s|version: |version: $IMAGE_TAG|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
+            #sed -i "s|version: |version: $IMAGE_TAG|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             cat /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             
-      - name: Commit and push changes
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: ${{ secrets.TOKEN }}
-          commit_message: Version updated
+      #- name: Commit and push changes
+      #  uses: devops-infra/action-commit-push@master
+      #  with:
+      #    github_token: ${{ secrets.TOKEN }}
+      #    commit_message: Version updated
