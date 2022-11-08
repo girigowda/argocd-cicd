@@ -65,6 +65,8 @@ jobs:
           IMAGE_TAG: ${{ env.SHA }}
         run: |
             ls -ltr
+            git branch
+            git remote show origin
             pwd
             echo $IMAGE_TAG
             yq e '.image.version = "'$IMAGE_TAG'"' -i /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
@@ -80,7 +82,7 @@ jobs:
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
       
       - name: Pushes test file
-        uses: cpina/github-action-push-to-another-repository@main
+        uses: girigowda/helm-agrocd@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
