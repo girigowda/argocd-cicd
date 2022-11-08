@@ -84,20 +84,20 @@ jobs:
             git config --global user.email "giri.gowda.5@gmail.com"
             git add .
             git commit -m "updated image tag"
-            git push origin master
+            #git push origin master
       
-      - name: Pushes test file
-        uses: girigowda/argocd-cicd@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
-        with:
-          source_file: '/home/runner/work/argocd-cicd/argocd-cicd/values.yaml'
-          destination_repo: 'girigowda/helm-agrocd'
-          destination_branch: 'master'
-          user_name: 'girigowda'
-          user-email: giri.gowda.5@gmail.com
-          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
-          commit_message: 'A custom message for the commit'
+      #- name: Pushes test file
+      #  uses: girigowda/argocd-cicd@main
+      #  env:
+      #    API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+      #  with:
+      #    source_file: '/home/runner/work/argocd-cicd/argocd-cicd/values.yaml'
+      #    destination_repo: 'girigowda/helm-agrocd'
+      #    destination_branch: 'master'
+      #    user_name: 'girigowda'
+      #    user-email: giri.gowda.5@gmail.com
+      #    API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+      #    commit_message: 'A custom message for the commit'
             
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@master
