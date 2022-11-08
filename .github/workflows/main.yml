@@ -80,12 +80,13 @@ jobs:
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
       
       - name: Pushes test file
-        uses: dmnemec/copy_file_to_another_repo_action@master
+        uses: girigowda/copy_file_to_another_repo_action@master
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
           source_file: 'values.yaml'
           destination_repo: 'girigowda/helm-agrocd'
+          user_name: 'girigowda'
           commit_message: 'A custom message for the commit'
             
       - name: Commit and push changes
