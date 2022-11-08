@@ -80,7 +80,7 @@ jobs:
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
       
       - name: Pushes test file
-        uses: datalbry/copy_folder_to_another_repo_action@1.0.0
+        uses: dmnemec/copy_file_to_another_repo_action@master
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
