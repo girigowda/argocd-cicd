@@ -80,6 +80,8 @@ jobs:
             ##sed -i "s|$ver|  $nam|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             #####cat /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
+            git config --global user.name 'girigowda'
+            git config --global user.email "giri.gowda.5@gmail.com"
             git add .
             git commit -m "updated image tag"
             git push origin master
