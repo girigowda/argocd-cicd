@@ -54,10 +54,10 @@ jobs:
           docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
         
       - name: Checkout tools repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
         with:
           repository: girigowda/helm-agrocd
-          path: main
+          token: ${{ secrets.TOKEN }}
           
       - name: Update Version
         env:
