@@ -80,7 +80,7 @@ jobs:
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
       
       - name: Pushes test file
-        uses: actions/github-action-push-to-another-repository@main
+        uses: girigowda/helm-agrocd@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
