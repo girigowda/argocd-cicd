@@ -89,6 +89,7 @@ jobs:
           destination_branch: 'master'
           user_name: 'girigowda'
           user-email: giri.gowda.5@gmail.com
+          github_token: ${{ secrets.TOKEN }}
           commit_message: 'A custom message for the commit'
             
       - name: Commit and push changes
