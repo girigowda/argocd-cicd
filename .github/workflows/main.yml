@@ -52,6 +52,12 @@ jobs:
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 813383539013.dkr.ecr.us-east-1.amazonaws.com
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg TOKEN=$TOKEN .
           docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
+        
+      - name: Checkout tools repo
+        uses: actions/checkout@v3
+        with:
+          repository: girigowda/helm-agrocd
+          path: main
           
       - name: Update Version
         env:
