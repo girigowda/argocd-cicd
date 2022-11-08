@@ -54,7 +54,7 @@ jobs:
           docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
         
       - name: Checkout tools repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           repository: girigowda/helm-agrocd
           path: main
