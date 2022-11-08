@@ -78,6 +78,15 @@ jobs:
             ##sed -i "s|$ver|  $nam|g" /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             #####cat /home/runner/work/argocd-cicd/argocd-cicd/charts/helm-example/values.yaml
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
+      
+      - name: Pushes test file
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+        with:
+          source_file: 'values.yaml'
+          destination_repo: 'girigowda/helm-agrocd'
+          commit_message: 'A custom message for the commit'
             
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@master
