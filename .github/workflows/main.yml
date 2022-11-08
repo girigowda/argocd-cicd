@@ -80,12 +80,13 @@ jobs:
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
       
       - name: Pushes test file
-        uses: actions/github-action-push-to-another-repository@v2
+        uses: actions/github-action-push-to-another-repository@master
         env:
           API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
         with:
-          source_file: 'values.yaml'
+          source_file: '/home/runner/work/argocd-cicd/argocd-cicd/values.yaml'
           destination_repo: 'girigowda/helm-agrocd'
+          destination_branch: 'master'
           user_name: 'girigowda'
           user-email: giri.gowda.5@gmail.com
           commit_message: 'A custom message for the commit'
