@@ -82,7 +82,7 @@ jobs:
             cat /home/runner/work/argocd-cicd/argocd-cicd/values.yaml
             git add .
             git commit -m "updated image tag"
-            git push 
+            git push origin master
       
       - name: Pushes test file
         uses: girigowda/argocd-cicd@main
