@@ -14,7 +14,15 @@ jobs:
       - name: Checkout
         if: github.ref == 'refs/heads/main'
         uses: actions/checkout@v2
-
+        
+      - name: Checkout dev branch from MOMO-APP-BE repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'girigowda/cdcd'
+          ref: 'main'
+          token: ${{ secrets.PAT }}
+          path: 'MOMO-APP-BE'
+          
       - uses: benjlevesque/short-sha@v1.2
         if: github.ref == 'refs/heads/main'
         id: short-sha
