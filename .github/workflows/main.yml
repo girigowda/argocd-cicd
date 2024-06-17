@@ -23,7 +23,7 @@ jobs:
           token: ${{ secrets.PAT }}
           path: 'MOMO-APP-BE'
       - name: path
-        run: ls -ltr && pwd
+        run: ls -ltr MOMO-APP-BE && pwd
       - uses: benjlevesque/short-sha@v1.2
         if: github.ref == 'refs/heads/main'
         id: short-sha
